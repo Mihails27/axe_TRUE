@@ -4,71 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="lgIcon.png">
-    <title>Test Interface | Axe One</title>
+    <title>Interface Test | Axe One</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <style>
         @font-face { font-family: 'Cal Sans'; src: local('Cal Sans'), local('CalSans-SemiBold'); font-weight: normal; }
-        :root { --bg: #070708; --monolith: #333333; --green: #00FF64; --red: #FF3333; }
+        :root { --bg: #070708; --monolith: #333333; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg) url('fon.png') no-repeat center center fixed; background-size: cover; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Cal Sans', 'Roboto', sans-serif; overflow: hidden; }
+        
+        body { 
+            background: var(--bg) url('fon.png') no-repeat center center fixed; 
+            background-size: cover; 
+            height: 100vh; width: 100vw; overflow: hidden;
+            font-family: 'Cal Sans', 'Roboto', sans-serif;
+            display: flex; align-items: center; /* Центрируем по вертикали */
+            justify-content: flex-start; /* Прижимаем к левому краю */
+        }
 
         #aura-feedback { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transition: 0.8s; z-index: 1; opacity: 0; }
 
-        /* ПАНЕЛЬ: Адаптивная ширина */
+        /* МОНОЛИТНАЯ ПАНЕЛЬ СЛЕВА */
         .monolith {
-            position: relative; width: 480px; max-width: 95vw; height: 90vh;
+            position: relative; left: 40px; 
+            width: 480px; height: 95vh;
             background: var(--monolith); border: 2px solid #000; border-radius: 15px;
             display: flex; flex-direction: column; z-index: 10; overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            box-shadow: 0 0 50px rgba(0,0,0,0.7);
+            animation: slideIn 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .bento-header { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(100px, auto); gap: 2px; background: #000; }
-        .tile { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 10px; transition: 0.3s; height: 130px; }
+        .bento-header { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #000; }
         
+        .tile { 
+            position: relative; display: flex; flex-direction: column; 
+            align-items: center; justify-content: flex-end; padding-bottom: 15px; 
+            transition: 0.4s ease; height: 140px; cursor: pointer;
+        }
+        
+        /* Цвета плиток */
         .t-req { background: #132754; } .t-lit { background: #F2A800; } .t-cop { background: #8BA870; }
         .t-mus { background: #F0F263; } .t-axi { background: #636363; } .t-dep { background: #2D9CDB; }
 
-        .app-name { font-size: 1rem; color: #fff; text-shadow: 1px 1px 2px #000; text-align: center; }
+        .app-name { font-size: 1.2rem; color: #fff; text-shadow: 1px 1px 2px #000; }
         .t-mus .app-name, .t-axi .app-name { color: #000; text-shadow: none; }
 
-        .feedback-bar { position: fixed; bottom: 20px; width: 90%; max-width: 400px; background: rgba(0,0,0,0.9); padding: 12px; border-radius: 50px; display: flex; justify-content: center; gap: 15px; z-index: 100; border: 1px solid rgba(255,255,255,0.1); }
-        .v-btn { border: none; background: none; color: #fff; font-family: 'Roboto'; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+        /* ЭФФЕКТ ЗАТЕМНЕНИЯ (Dimming) */
+        .bento-header:hover .tile { opacity: 0.2; filter: grayscale(0.5); }
+        .bento-header .tile:hover { opacity: 1; filter: grayscale(0); transform: scale(1.05); z-index: 20; }
 
-        .exit { position: fixed; top: 15px; right: 20px; color: #fff; text-decoration: none; font-size: 0.7rem; opacity: 0.5; z-index: 100; }
+        /* ФУНКЦИОНАЛЬНЫЕ ЭЛЕМЕНТЫ ВНУТРИ (как на твоем скрине) */
+        .inner-search { width: 80%; height: 20px; background: #fff; border-radius: 10px; margin-bottom: 30px; border: 1px solid #000; }
+        .inner-doc { width: 40px; height: 50px; background: #fff; border: 1.5px solid #000; margin-bottom: 10px; }
+        .inner-note { color: #000; font-size: 3rem; margin-bottom: 5px; }
 
-        /* ОПТИМИЗАЦИЯ СЕТКИ ДЛЯ ТЕЛЕФОНОВ */
-        @media (max-width: 480px) {
-            .bento-header { grid-template-columns: repeat(2, 1fr); } /* 2 иконки в ряд на телефонах */
-            .tile { height: 110px; }
-            .app-name { font-size: 0.8rem; }
+        /* КНОПКИ ФИДБЕКА */
+        .feedback-bar { position: fixed; bottom: 30px; right: 40px; background: rgba(0,0,0,0.85); padding: 15px 30px; border-radius: 100px; display: flex; gap: 20px; z-index: 100; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        .v-btn { border: none; background: none; color: #fff; font-family: 'Roboto'; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
+        .v-btn:hover { transform: translateY(-5px); text-shadow: 0 0 10px #fff; }
+
+        @keyframes slideIn { from { left: -500px; opacity: 0; } to { left: 40px; opacity: 1; } }
+
+        /* Адаптив для маленьких экранов (чтобы не ломалось совсем) */
+        @media (max-width: 600px) {
+            .monolith { left: 10px; width: 95vw; }
+            .bento-header { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
     <div id="aura-feedback"></div>
-    <a href="index.html" class="exit">EXIT_PREVIEW</a>
     <div class="monolith">
         <div class="bento-header">
-            <div class="tile t-req"><div class="app-name">Requisitio</div></div>
-            <div class="tile t-lit"><div class="app-name">Littera</div></div>
+            <div class="tile t-req"><div class="inner-search"></div><div class="app-name">Requisitio</div></div>
+            <div class="tile t-lit"><div class="inner-doc"></div><div class="app-name">Littera</div></div>
             <div class="tile t-cop"><div class="app-name">Copia</div></div>
-            <div class="tile t-mus"><div class="app-name">Musicam</div></div>
+            <div class="tile t-mus"><div class="inner-note">♫</div><div class="app-name">Musicam</div></div>
             <div class="tile t-axi"><div class="app-name">Axis</div></div>
             <div class="tile t-dep"><div class="app-name">Depromere</div></div>
         </div>
-        <div style="flex-grow:1; background:#424242;"></div>
+        <div style="flex-grow:1; background:#424242; margin: 5px; border-radius: 5px;"></div>
     </div>
     <div class="feedback-bar">
-        <button class="v-btn" style="color:var(--green)" onclick="vote('green')">ЛАЙК</button>
-        <button class="v-btn" style="color:#888" onclick="vote('gray')">НЕЙТРАЛЬНО</button>
-        <button class="v-btn" style="color:var(--red)" onclick="vote('red')">ДИЗЛАЙК</button>
+        <button class="v-btn" style="color:#00ff64" onclick="vote('green')">ЛАЙК</button>
+        <button class="v-btn" onclick="vote('gray')">НЕЙТРАЛЬНО</button>
+        <button class="v-btn" style="color:#ff3232" onclick="vote('red')">ДИЗЛАЙК</button>
     </div>
     <script>
         function vote(type) {
             const aura = document.getElementById('aura-feedback');
             aura.style.opacity = "1";
             let color = type === 'green' ? "rgba(0, 255, 100, 0.3)" : type === 'red' ? "rgba(255, 50, 50, 0.3)" : "rgba(255, 255, 255, 0.1)";
-            aura.style.background = `radial-gradient(circle, ${color} 0%, rgba(0,0,0,0) 80%)`;
+            aura.style.background = `radial-gradient(circle at 60% 50%, ${color} 0%, rgba(0,0,0,0) 80%)`;
         }
     </script>
 </body>
