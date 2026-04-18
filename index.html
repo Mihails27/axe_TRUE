@@ -1,75 +1,71 @@
+<!-- Вставь это в index.html вместо старого кода -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="lgIcon.png">
-    <title>Test Interface | Axe One</title>
+    <title>Layer Group | AxeOS</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <style>
         @font-face { font-family: 'Cal Sans'; src: local('Cal Sans'), local('CalSans-SemiBold'); font-weight: normal; }
-        :root { --bg: #070708; --monolith: #333333; --green: #00FF64; --red: #FF3333; }
+        :root { --dark: #0B0C10; --gray: #8892B0; --cyan: #00E5FF; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg) url('fon.png') no-repeat center center fixed; background-size: cover; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Cal Sans', 'Roboto', sans-serif; overflow: hidden; }
+        body { background: var(--dark) url('fon.png') no-repeat center center fixed; background-size: cover; color: #fff; font-family: 'Cal Sans', 'Roboto', sans-serif; overflow-x: hidden; }
+        p, span, .ru { font-family: 'Roboto', sans-serif; font-weight: 700; }
+        h1, h2, h3, .en { font-weight: normal; text-transform: uppercase; }
 
-        #aura-feedback { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transition: 0.8s; z-index: 1; opacity: 0; }
+        header { position: fixed; top: 0; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(11, 12, 16, 0.7); backdrop-filter: blur(15px); z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        header img { height: 40px; }
 
-        /* ПАНЕЛЬ: Адаптивная ширина */
-        .monolith {
-            position: relative; width: 480px; max-width: 95vw; height: 90vh;
-            background: var(--monolith); border: 2px solid #000; border-radius: 15px;
-            display: flex; flex-direction: column; z-index: 10; overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-        }
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .hero img { width: 280px; margin-bottom: 20px; animation: float 4s infinite ease-in-out; }
+        .hero h1 { font-size: 5rem; letter-spacing: -2px; line-height: 1; }
+        .hero p { font-size: 1.2rem; color: var(--gray); margin: 20px 0 40px; max-width: 600px; }
 
-        .bento-header { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(100px, auto); gap: 2px; background: #000; }
-        .tile { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 10px; transition: 0.3s; height: 130px; }
+        /* ГРУППА КНОПОК */
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn { padding: 18px 40px; background: #fff; color: var(--dark); text-decoration: none; border-radius: 4px; transition: 0.3s; font-family: 'Cal Sans'; font-size: 1rem; }
+        .btn:hover { background: var(--cyan); box-shadow: 0 0 30px rgba(0,229,255,0.5); transform: translateY(-3px); }
+        .btn-secondary { background: transparent; color: #fff; border: 1.5px solid #fff; }
+
+        .architecture { padding: 80px 20px; text-align: center; background: rgba(0,0,0,0.4); }
+        .arch-grid { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+        .arch-item h4 { color: var(--cyan); margin-bottom: 10px; font-size: 1.5rem; }
+
+        footer { padding: 60px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; color: var(--gray); }
         
-        .t-req { background: #132754; } .t-lit { background: #F2A800; } .t-cop { background: #8BA870; }
-        .t-mus { background: #F0F263; } .t-axi { background: #636363; } .t-dep { background: #2D9CDB; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
-        .app-name { font-size: 1rem; color: #fff; text-shadow: 1px 1px 2px #000; text-align: center; }
-        .t-mus .app-name, .t-axi .app-name { color: #000; text-shadow: none; }
-
-        .feedback-bar { position: fixed; bottom: 20px; width: 90%; max-width: 400px; background: rgba(0,0,0,0.9); padding: 12px; border-radius: 50px; display: flex; justify-content: center; gap: 15px; z-index: 100; border: 1px solid rgba(255,255,255,0.1); }
-        .v-btn { border: none; background: none; color: #fff; font-family: 'Roboto'; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
-
-        .exit { position: fixed; top: 15px; right: 20px; color: #fff; text-decoration: none; font-size: 0.7rem; opacity: 0.5; z-index: 100; }
-
-        /* ОПТИМИЗАЦИЯ СЕТКИ ДЛЯ ТЕЛЕФОНОВ */
-        @media (max-width: 480px) {
-            .bento-header { grid-template-columns: repeat(2, 1fr); } /* 2 иконки в ряд на телефонах */
-            .tile { height: 110px; }
-            .app-name { font-size: 0.8rem; }
+        /* МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ДЛЯ ГЛАВНОЙ */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .hero h1 { font-size: 3rem; }
+            .hero img { width: 200px; }
+            .hero p { font-size: 1rem; }
+            header .en { display: none; } /* Скрываем девиз на мелких экранах */
         }
     </style>
 </head>
 <body>
-    <div id="aura-feedback"></div>
-    <a href="index.html" class="exit">EXIT_PREVIEW</a>
-    <div class="monolith">
-        <div class="bento-header">
-            <div class="tile t-req"><div class="app-name">Requisitio</div></div>
-            <div class="tile t-lit"><div class="app-name">Littera</div></div>
-            <div class="tile t-cop"><div class="app-name">Copia</div></div>
-            <div class="tile t-mus"><div class="app-name">Musicam</div></div>
-            <div class="tile t-axi"><div class="app-name">Axis</div></div>
-            <div class="tile t-dep"><div class="app-name">Depromere</div></div>
+    <header><img src="lg.png" alt="LG"><div class="en" style="color: var(--gray);">Engineering Tomorrow.</div></header>
+    <section class="hero">
+        <img src="axe.png" alt="Axe">
+        <h1>Axe One</h1>
+        <p>CREATIVEST: Вторая итерация логического ядра. Система, восстающая из пепла для достижения абсолютной чистоты.</p>
+        <div class="btn-group">
+            <a href="explore.html" class="btn">Explore Axe One</a>
+            <a href="test.html" class="btn btn-secondary">Interface Test</a>
         </div>
-        <div style="flex-grow:1; background:#424242;"></div>
-    </div>
-    <div class="feedback-bar">
-        <button class="v-btn" style="color:var(--green)" onclick="vote('green')">ЛАЙК</button>
-        <button class="v-btn" style="color:#888" onclick="vote('gray')">НЕЙТРАЛЬНО</button>
-        <button class="v-btn" style="color:var(--red)" onclick="vote('red')">ДИЗЛАЙК</button>
-    </div>
-    <script>
-        function vote(type) {
-            const aura = document.getElementById('aura-feedback');
-            aura.style.opacity = "1";
-            let color = type === 'green' ? "rgba(0, 255, 100, 0.3)" : type === 'red' ? "rgba(255, 50, 50, 0.3)" : "rgba(255, 255, 255, 0.1)";
-            aura.style.background = `radial-gradient(circle, ${color} 0%, rgba(0,0,0,0) 80%)`;
-        }
-    </script>
+    </section>
+    <section class="architecture">
+        <h2 class="en">System Architecture</h2>
+        <div class="arch-grid">
+            <div class="arch-item"><h4>VBA Core</h4><p>Логика</p></div>
+            <div class="arch-item"><h4>Kiosk 2.0</h4><p>Изоляция</p></div>
+            <div class="arch-item"><h4>ActiveX</h4><p>Ввод данных</p></div>
+        </div>
+    </section>
+    <footer><p>© 2026 Layer Group. Made in Latvia.</p></footer>
 </body>
 </html>
