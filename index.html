@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="lgIcon.png">
-    <title>Layer Group | AxeOS</title>
+    <title>Layer Group | Engineering Tomorrow</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <style>
         @font-face { font-family: 'Cal Sans'; src: local('Cal Sans'), local('CalSans-SemiBold'); font-weight: normal; }
         :root { --dark: #0B0C10; --gray: #8892B0; --cyan: #00E5FF; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--dark) url('fon.png') no-repeat center center fixed; background-size: cover; color: #fff; font-family: 'Cal Sans', 'Roboto', sans-serif; overflow-x: hidden; }
+        
+        body { 
+            background: var(--dark) url('fon.png') no-repeat center center fixed; 
+            background-size: cover; color: #fff; 
+            font-family: 'Cal Sans', 'Roboto', sans-serif; overflow-x: hidden;
+            animation: futuristicEntry 1.2s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        @keyframes futuristicEntry {
+            from { opacity: 0; filter: blur(20px); transform: scale(1.05); }
+            to { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+
         p, span, .ru { font-family: 'Roboto', sans-serif; font-weight: 700; }
         h1, h2, h3, .en { font-weight: normal; text-transform: uppercase; }
 
@@ -19,16 +31,20 @@
 
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
         .hero img { width: 280px; margin-bottom: 20px; animation: float 4s infinite ease-in-out; }
-        .hero h1 { font-size: 5rem; letter-spacing: -2px; line-height: 1; }
+        .hero h1 { font-size: 5rem; letter-spacing: -2px; }
         .hero p { font-size: 1.2rem; color: var(--gray); margin: 20px 0 40px; max-width: 600px; }
 
-        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-        .btn { padding: 15px 30px; background: #fff; color: var(--dark); text-decoration: none; border-radius: 4px; transition: 0.3s; font-family: 'Cal Sans'; font-size: 0.9rem; text-transform: uppercase; }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn { padding: 18px 40px; background: #fff; color: var(--dark); text-decoration: none; border-radius: 4px; transition: 0.3s; font-family: 'Cal Sans'; font-size: 0.9rem; text-transform: uppercase; }
         .btn:hover { background: var(--cyan); box-shadow: 0 0 30px rgba(0,229,255,0.5); transform: translateY(-3px); }
-        .btn-secondary { background: transparent; color: #fff; border: 1.5px solid #fff; }
+        .btn-secondary { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+        .btn-secondary:hover { border-color: var(--cyan); background: rgba(0,229,255,0.1); }
 
-        @media (max-width: 768px) { .hero h1 { font-size: 3rem; } .hero img { width: 200px; } }
+        footer { padding: 80px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.8); }
+        .footer-text { font-size: 0.9rem; color: var(--gray); line-height: 1.8; max-width: 800px; margin: 0 auto; }
+        
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @media (max-width: 768px) { .hero h1 { font-size: 3rem; } .hero img { width: 200px; } }
     </style>
 </head>
 <body>
@@ -38,10 +54,17 @@
         <h1>Axe One</h1>
         <p>CREATIVEST: Вторая итерация логического ядра. Система, восстающая из пепла для достижения абсолютной чистоты.</p>
         <div class="btn-group">
-            <a href="explore.html" class="btn">Explore Axe One</a>
+            <a href="explore.html" class="btn">Explore Docs</a>
             <a href="test.html" class="btn btn-secondary">Web Test UI</a>
             <a href="ip.html" class="btn btn-secondary">IP Rights</a>
         </div>
     </section>
+
+    <footer>
+        <div class="footer-text">
+            © 2026 Layer Group. Все логотипы, элементы дизайна и названия продуктов (в т.ч. AxeOS, Requisitio) являются интеллектуальной собственностью Layer Group. Пожалуйста, цените чужой труд.<br>
+            <strong>Made in Latvia.</strong>
+        </div>
+    </footer>
 </body>
 </html>
