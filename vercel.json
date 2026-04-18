@@ -1,21 +1,35 @@
 {
   "cleanUrls": true,
-  "rewrites": [
+  "redirects": [
+    {
+      "source": "/explore.html",
+      "destination": "/404.html",
+      "permanent": false
+    },
+    {
+      "source": "/test.html",
+      "destination": "/404.html",
+      "permanent": false
+    },
+    {
+      "source": "/ip.html",
+      "destination": "/404.html",
+      "permanent": false
+    },
     {
       "source": "/explore",
-      "destination": "/404.html"
+      "destination": "/404.html",
+      "permanent": false
     },
     {
       "source": "/test",
-      "destination": "/404.html"
+      "destination": "/404.html",
+      "permanent": false
     },
     {
       "source": "/ip",
-      "destination": "/404.html"
-    },
-    {
-      "source": "/((?!index.html|404.html|lgIcon.png|axe.png|lg.png|fon.png|requisito_manual.pdf|littera_manual.pdf).*)",
-      "destination": "/404.html"
+      "destination": "/404.html",
+      "permanent": false
     }
   ]
 }
